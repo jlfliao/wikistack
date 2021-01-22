@@ -4,12 +4,19 @@ const path = require('path');
 const port = 3000;
 const { db } = require('./models');
 const layout = require('./views/layout.js');
-const { addPage, editPage, main, userList, userPages, wikiPage } = require('./views/index.js');
+const {
+  addPage,
+  editPage,
+  main,
+  userList,
+  userPages,
+  wikiPage,
+} = require('./views/index.js');
 const wikiRouter = require('./routes/wiki.js');
 const usersRouter = require('./routes/users.js');
 
 db.authenticate().then(() => {
-	console.log('connected to database');
+  console.log('connected to database');
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -17,19 +24,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded());
 
 app.get('/', (req, res, next) => {
-	res.redirect('/wiki');
+  res.redirect('/wiki');
 });
 
 app.use('/wiki', wikiRouter);
 
 const init = async () => {
-	await db.sync({ force: true });
+  await db.sync({ force: true });
 
-	console.log('database synced');
+  console.log('database synced');
 
-	app.listen(port, () => {
-		console.log(`server is listening on port ${port}`);
-	});
+  app.listen(port, () => {
+    console.log(`server is listening on port ${port}`);
+  });
 };
 
 init();
