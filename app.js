@@ -23,11 +23,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded());
 
+app.use('/wiki', wikiRouter);
+
 app.get('/', (req, res, next) => {
+  console.log('appget./');
   res.redirect('/wiki');
 });
-
-app.use('/wiki', wikiRouter);
 
 const init = async () => {
   await db.sync({ force: true });
